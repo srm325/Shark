@@ -1,47 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.features.uploadImage.UploadImageFragment">
-    <Button android:id="@+id/scan_button"
+
+    <Button
+        android:id="@+id/scan_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:text="@string/scan" />
+        android:text="@string/scan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/scan_format"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textIsSelectable="true"
+        android:layout_below="@id/scan_button"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/scan_button" />
+        android:textIsSelectable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scan_button"
+        tools:text="something" />
+
     <TextView
         android:id="@+id/scan_content"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textIsSelectable="true"
+        android:layout_below="@id/scan_format"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:layout_below="@id/scan_format" />
+        android:textIsSelectable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scan_format"
+        tools:text="something" />
+
     <TextView
         android:id="@+id/recyclable"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textIsSelectable="true"
+        android:layout_below="@id/scan_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:layout_below="@id/scan_content" />
+        android:textIsSelectable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scan_content"
+        tools:text="something" />
+
     <TextView
         android:id="@+id/type"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textIsSelectable="true"
+        android:layout_below="@id/recyclable"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:layout_below="@id/recyclable" />
+        android:textIsSelectable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclable"
+        tools:text="something" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

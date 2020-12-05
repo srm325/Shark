@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.srm325.shark"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -108,5 +108,8 @@ dependencies {
 
     // timber logs
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //scanner
+    implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
 
 }
