@@ -19,6 +19,9 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.zxing.integration.android.IntentIntegrator
 import com.srm325.shark.R
 import timber.log.Timber
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 
 
 class UploadImageFragment : Fragment() {
@@ -64,7 +67,7 @@ class UploadImageFragment : Fragment() {
 
             Timber.d(scanContent)
             Timber.d(scanFormat)
-
+            readData(scanContent)
             
         } else {
             val toast = Toast.makeText(
@@ -75,5 +78,23 @@ class UploadImageFragment : Fragment() {
         }
     }
 
+    private fun readData(scannedValue :String) {
+        Timber.d("CSV in read data method")
+        var line: String?
+        val reading = InputStreamReader(resources.openRawResource(R.raw.barcodedata))
+        val reader = BufferedReader(reading)
+        try {
+            while (reader.readLine().also { line = it } != null) {
+                if(line!=null){
+                    Timber.d(line)
+                    val code = line!!.split(",")[0]
+                    if(code==scannedValue)
+                        Toast.makeText(context, "Successful Match", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
 
 }
