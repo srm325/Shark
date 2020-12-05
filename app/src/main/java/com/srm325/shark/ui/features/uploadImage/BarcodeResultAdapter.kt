@@ -25,7 +25,10 @@ class BarcodeResultAdapter(var postList: List<BarcodeResult>) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: BarcodeViewHolder, position: Int) {
 
-
+        val item = postList[position]
+        holder.name.text = item.name
+        holder.element.text = item.element
+        holder.isRecyclable.text = item.isRecyclable
 
     }
 
