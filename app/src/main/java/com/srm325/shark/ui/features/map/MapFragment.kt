@@ -71,7 +71,7 @@ class ChatListFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClick
                 }
                 //Place current location marker
                 val latLng = LatLng(location.latitude, location.longitude)
-                val source = latLng
+                source = latLng
                 val markerOptions = MarkerOptions()
                 markerOptions.position(latLng)
                 markerOptions.title("Current Position")
