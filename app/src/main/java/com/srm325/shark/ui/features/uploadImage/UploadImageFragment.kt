@@ -16,8 +16,9 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.srm325.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.integration.android.IntentIntegrator
 import com.srm325.shark.R
+import timber.log.Timber
 
 
 class UploadImageFragment : Fragment() {
@@ -39,30 +40,32 @@ class UploadImageFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view: View = inflater.inflate(R.layout.uploadimage_layout, container, false)
         val scanBtn: MaterialButton = view.findViewById(R.id.scan_button)
-        val contentTxt:TextView = view.findViewById(R.id.scan_content)
-        val recyclableTxt:TextView = view.findViewById(R.id.recyclable)
-        val type:TextView = view.findViewById(R.id.type)
+        contentTxt = view.findViewById(R.id.scan_content)
+        recyclableTxt= view.findViewById(R.id.recyclable)
+        type = view.findViewById(R.id.type)
         scanBtn.setOnClickListener {
-            var scanIntegrator : IntentIntegrator ? = IntentIntegrator(activity)
-            if (scanIntegrator != null) {
-                scanIntegrator.initiateScan()
-            }
+            IntentIntegrator.forSupportFragment(this).initiateScan();
+
         }
         return view
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        Timber.d("this is getting called")
+
         super.onActivityResult(requestCode, resultCode, intent)
+
         val scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent)
         if (scanningResult != null) {
             val scanContent = scanningResult.contents
             val scanFormat = scanningResult.formatName
-            formatTxt!!.text = "Barcode Format: $scanFormat"
-            contentTxt!!.text = "Barcode: $scanContent"
-            recyclableTxt!!.text = "Recyclable"
-            type!!.text = "Type: Plastic0"
+
+            Timber.d(scanContent)
+            Timber.d(scanFormat)
+
+            
         } else {
             val toast = Toast.makeText(
                 context,
