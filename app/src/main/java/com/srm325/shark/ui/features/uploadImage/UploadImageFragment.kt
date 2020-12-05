@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -35,7 +36,7 @@ class UploadImageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view: View = inflater.inflate(R.layout.uploadimage_layout, container, false)
-        val scanBtn: MaterialButton = view.findViewById(R.id.scan_button)
+        val scanBtn: ImageView = view.findViewById(R.id.scan_button)
         type = view.findViewById(R.id.type)
         scanBtn.setOnClickListener {
             IntentIntegrator.forSupportFragment(this).initiateScan();
@@ -68,7 +69,8 @@ class UploadImageFragment : Fragment() {
 
             Timber.d(scanContent)
             Timber.d(scanFormat)
-            readData(scanContent)
+            if(scanContent!=null)
+                readData(scanContent)
             
         } else {
             val toast = Toast.makeText(
