@@ -1,21 +1,16 @@
 package com.srm325.shark.ui.features.uploadImage
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.zxing.integration.android.IntentIntegrator
 import com.srm325.shark.R
 import com.srm325.shark.data.model.BarcodeResult
@@ -27,21 +22,9 @@ import java.io.InputStreamReader
 
 
 class UploadImageFragment : Fragment() {
-    private var scanBtn: Button? = null
-    private val formatTxt: TextView? = null
-    private  var contentTxt:TextView? = null
-    private  var recyclableTxt:TextView? = null
     private  var type:TextView? = null
     private  lateinit var adapter : BarcodeResultAdapter
     private var contentList : MutableList<BarcodeResult> = mutableListOf()
-
-    companion object{
-        const val GET_FROM_GALLERY = 3
-    }
-    var bitmap: Bitmap? = null
-    lateinit var img: ImageView
-    lateinit var selectedImage:Uri
-    lateinit var storage: FirebaseStorage
     val db = Firebase.firestore
 
 
@@ -54,14 +37,17 @@ class UploadImageFragment : Fragment() {
         type = view.findViewById(R.id.type)
         scanBtn.setOnClickListener {
             IntentIntegrator.forSupportFragment(this).initiateScan();
-
         }
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        doneButton.setOnClickListener {
+            uploadData()
+        }
 
         adapter =  BarcodeResultAdapter(contentList)
         scanned_items_list.adapter = adapter
@@ -91,7 +77,7 @@ class UploadImageFragment : Fragment() {
         }
     }
 
-    private fun readData(scannedValue :String) {
+    private fun readData(scannedValue: String) {
         Timber.d("CSV in read data method")
         var line: String?
         val reading = InputStreamReader(resources.openRawResource(R.raw.barcodedata))
@@ -109,6 +95,7 @@ class UploadImageFragment : Fragment() {
                         Toast.makeText(context, "Successful Match", Toast.LENGTH_SHORT).show()
                         contentList.add(
                             BarcodeResult(
+                                "",
                                 code,
                                 name,
                                 element,
@@ -124,4 +111,16 @@ class UploadImageFragment : Fragment() {
         }
     }
 
+    private fun uploadData(){
+
+        val tsLong = System.currentTimeMillis() / 1000
+        val ts = tsLong.toString()
+
+        for(item in contentList){
+
+            item.id = ts
+            db.collection("posts").document(ts)
+                .set(item)
+        }
+    }
 }
