@@ -40,6 +40,7 @@ class FeedFragment : Fragment(), FeedFragmentCallback {
         val postList:MutableList<BarcodeResult> = mutableListOf()
         val db = Firebase.firestore
         db.collection("posts")
+            .whereEqualTo("userId", user!!.uid)
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {

@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.zxing.integration.android.IntentIntegrator
@@ -26,6 +27,7 @@ class UploadImageFragment : Fragment() {
     private  lateinit var adapter : BarcodeResultAdapter
     private var contentList : MutableList<BarcodeResult> = mutableListOf()
     val db = Firebase.firestore
+    val user = Firebase.auth.currentUser
 
 
     override fun onCreateView(
@@ -96,6 +98,7 @@ class UploadImageFragment : Fragment() {
                         contentList.add(
                             BarcodeResult(
                                 "",
+                                user!!.uid,
                                 code,
                                 name,
                                 element,
