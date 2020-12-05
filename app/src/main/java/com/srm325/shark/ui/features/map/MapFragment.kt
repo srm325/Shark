@@ -118,6 +118,8 @@ class ChatListFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClick
                     MarkerOptions().position(area1).title(placename)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                 )
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15F))
+
 
             }
         }
