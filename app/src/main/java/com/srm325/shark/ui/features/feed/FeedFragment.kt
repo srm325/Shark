@@ -11,6 +11,8 @@ import com.srm325.shark.data.model.Post
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.srm325.shark.data.model.BarcodeResult
+import com.srm325.shark.ui.features.uploadImage.BarcodeResultAdapter
 import kotlinx.android.synthetic.main.feed_fragment.*
 
 class FeedFragment : Fragment(), FeedFragmentCallback {
@@ -35,17 +37,17 @@ class FeedFragment : Fragment(), FeedFragmentCallback {
         viewModel = ViewModelProvider(this).get(FeedViewModel::class.java)
         val user = Firebase.auth.currentUser
 
-        val postList:MutableList<Post> = mutableListOf()
+        val postList:MutableList<BarcodeResult> = mutableListOf()
         val db = Firebase.firestore
         db.collection("posts")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val post = document.toObject(Post::class.java)
+                    val post = document.toObject(BarcodeResult::class.java)
                     postList.add(post)
                     postList.reverse()
                 }
-                val adapter = PostAdapter(postList, this)
+                val adapter = BarcodeResultAdapter(postList)
                 feed_recyclerview.adapter = adapter
             }
 
