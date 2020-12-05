@@ -12,20 +12,66 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/scan"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/finish_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/finish_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/finish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scan_button"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/scanned_items_list"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/single_line"
+    <TextView
+        android:id="@+id/scan_format"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_below="@id/scan_button"
+        android:layout_centerHorizontal="true"
+        android:textIsSelectable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scan_button" />
+        app:layout_constraintTop_toBottomOf="@+id/scan_button"
+        tools:text="something" />
+
+    <TextView
+        android:id="@+id/scan_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scan_format"
+        android:layout_centerHorizontal="true"
+        android:textIsSelectable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scan_format"
+        tools:text="something" />
+
+    <TextView
+        android:id="@+id/recyclable"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scan_content"
+        android:layout_centerHorizontal="true"
+        android:textIsSelectable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scan_content"
+        tools:text="something" />
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recyclable"
+        android:layout_centerHorizontal="true"
+        android:textIsSelectable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclable"
+        tools:text="something" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
