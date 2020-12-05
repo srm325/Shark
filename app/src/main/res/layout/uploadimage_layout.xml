@@ -16,52 +16,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/scan_format"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/scanned_items_list"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/single_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/scan_button"
-        android:layout_centerHorizontal="true"
-        android:textIsSelectable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scan_button"
-        tools:text="something" />
-
-    <TextView
-        android:id="@+id/scan_content"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/scan_format"
-        android:layout_centerHorizontal="true"
-        android:textIsSelectable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scan_format"
-        tools:text="something" />
-
-    <TextView
-        android:id="@+id/recyclable"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/scan_content"
-        android:layout_centerHorizontal="true"
-        android:textIsSelectable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scan_content"
-        tools:text="something" />
-
-    <TextView
-        android:id="@+id/type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/recyclable"
-        android:layout_centerHorizontal="true"
-        android:textIsSelectable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclable"
-        tools:text="something" />
+        app:layout_constraintTop_toBottomOf="@+id/scan_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

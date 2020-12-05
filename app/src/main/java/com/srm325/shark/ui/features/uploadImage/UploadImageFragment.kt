@@ -18,6 +18,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.zxing.integration.android.IntentIntegrator
 import com.srm325.shark.R
+import com.srm325.shark.data.model.BarcodeResult
+import kotlinx.android.synthetic.main.uploadimage_layout.*
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.IOException
@@ -30,6 +32,9 @@ class UploadImageFragment : Fragment() {
     private  var contentTxt:TextView? = null
     private  var recyclableTxt:TextView? = null
     private  var type:TextView? = null
+    private  lateinit var adapter : BarcodeResultAdapter
+    private var contentList : MutableList<BarcodeResult> = mutableListOf()
+
     companion object{
         const val GET_FROM_GALLERY = 3
     }
@@ -46,8 +51,6 @@ class UploadImageFragment : Fragment() {
     ): View {
         val view: View = inflater.inflate(R.layout.uploadimage_layout, container, false)
         val scanBtn: MaterialButton = view.findViewById(R.id.scan_button)
-        contentTxt = view.findViewById(R.id.scan_content)
-        recyclableTxt= view.findViewById(R.id.recyclable)
         type = view.findViewById(R.id.type)
         scanBtn.setOnClickListener {
             IntentIntegrator.forSupportFragment(this).initiateScan();
@@ -55,6 +58,16 @@ class UploadImageFragment : Fragment() {
         }
         return view
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        adapter =  BarcodeResultAdapter(contentList)
+        scanned_items_list.adapter = adapter
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         Timber.d("this is getting called")
 
@@ -87,9 +100,23 @@ class UploadImageFragment : Fragment() {
             while (reader.readLine().also { line = it } != null) {
                 if(line!=null){
                     Timber.d(line)
-                    val code = line!!.split(",")[0]
-                    if(code==scannedValue)
+                    val matches = line!!.split(",")
+                    val code = matches[0]
+                    if(code==scannedValue) {
+                        val name = matches[1]
+                        val element = matches[2]
+                        val isRecyclable = matches[3]
                         Toast.makeText(context, "Successful Match", Toast.LENGTH_SHORT).show()
+                        contentList.add(
+                            BarcodeResult(
+                                code,
+                                name,
+                                element,
+                                isRecyclable
+                            )
+                        )
+                        adapter.notifyDataSetChanged()
+                    }
                 }
             }
         } catch (e: IOException) {
