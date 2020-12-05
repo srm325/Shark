@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="10dp"
+        android:background="@drawable/thin_white_borders"
         android:paddingBottom="10dp">
 
         <LinearLayout
