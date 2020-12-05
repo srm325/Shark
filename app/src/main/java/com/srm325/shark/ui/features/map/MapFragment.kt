@@ -83,7 +83,7 @@ class ChatListFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClick
                 val searchlink =
                     "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=recycling%20centers" +
                             "&inputtype=textquery&fields=formatted_address,name,opening_hours" +
-                            "&locationbias=circle:2000@" + source.latitude.toString() + "," + source.longitude.toString() +
+                            "&locationbias=circle:2000@" + latLng.latitude.toString() + "," + latLng.longitude.toString() +
                             "&key=AIzaSyAgl_tVAk1eyfsSfDOI-RPF8kiEerOVKhY"
                 Timber.e(searchlink.toString())
                 val data: String
@@ -118,7 +118,6 @@ class ChatListFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClick
                     MarkerOptions().position(area1).title(placename)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                 )
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(area1, 15F))
 
             }
         }

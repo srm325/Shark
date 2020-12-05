@@ -17,6 +17,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.srm325.google.zxing.integration.android.IntentIntegrator
+import com.srm325.google.zxing.integration.android.IntentResult
 import com.srm325.shark.R
 
 
@@ -55,7 +56,7 @@ class UploadImageFragment : Fragment() {
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
-        val scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent)
+        val scanningResult: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent)
         if (scanningResult != null) {
             val scanContent = scanningResult.contents
             val scanFormat = scanningResult.formatName
