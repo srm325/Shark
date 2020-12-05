@@ -78,7 +78,8 @@ class ChatListFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClick
                 markerOptions.position(latLng)
                 markerOptions.title("Current Position")
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15F))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15F))
+                //query recycling center
                 val searchlink =
                     "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=recycling%20centers" +
                             "&inputtype=textquery&fields=formatted_address,name,opening_hours" +
@@ -117,6 +118,7 @@ class ChatListFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClick
                     MarkerOptions().position(area1).title(placename)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                 )
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(area1, 15F))
 
             }
         }
