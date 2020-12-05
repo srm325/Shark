@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.os.StrictMode
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ import com.google.maps.android.PolyUtil
 import com.srm325.shark.R
 import com.srm325.shark.data.Repository
 import kotlinx.android.synthetic.main.map_fragment.*
+import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.BufferedReader
@@ -77,6 +79,44 @@ class ChatListFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClick
                 markerOptions.title("Current Position")
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                 //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15F))
+                val searchlink =
+                    "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=recycling%20centers" +
+                            "&inputtype=textquery&fields=formatted_address,name,opening_hours" +
+                            "&locationbias=circle:2000@" + source.latitude.toString() + "," + source.longitude.toString() +
+                            "&key=AIzaSyAgl_tVAk1eyfsSfDOI-RPF8kiEerOVKhY"
+                Timber.e(searchlink.toString())
+                val data: String
+                var inputStream: InputStream? = null
+                var connection: HttpURLConnection? = null
+                val directionUrl = URL(searchlink)
+                Timber.e(directionUrl.toString())
+                connection = directionUrl.openConnection() as HttpURLConnection
+                connection.connect()
+                inputStream = connection.inputStream
+                val bufferedReader = BufferedReader(InputStreamReader(inputStream))
+                val stringBuffer = StringBuffer()
+                var line: String? = ""
+                while (bufferedReader.readLine().also { line = it } != null) {
+                    stringBuffer.append(line)
+                }
+                data = stringBuffer.toString()
+                bufferedReader.close()
+
+                inputStream.close()
+                connection.disconnect()
+                val doc = JSONObject(data)
+                val addressarray: JSONArray = doc.getJSONArray("candidates")
+                val placename = addressarray.getJSONObject(0).getString("name")
+                val strAddress = addressarray.getJSONObject(0).getString("formatted_address")
+                Log.d("TEST", addressarray.getJSONObject(0).getString("formatted_address"))
+                val location1 = getLocationFromAddress(activity, strAddress) as LatLng
+                val lat1:Double = location1.latitude
+                val lon1:Double = location1.longitude
+                val area1 = LatLng(lat1, lon1)
+                mMap.addMarker(
+                    MarkerOptions().position(area1).title(placename)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                )
 
             }
         }
@@ -152,12 +192,7 @@ class ChatListFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClick
         mLocationRequest.fastestInterval = 120000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
 
-        val searchlink =
-            "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=recycling%20centers" +
-                    "&inputtype=textquery&fields=formatted_address,name,opening_hours" +
-                    "&locationbias=circle:2000@" + source.latitude.toString() + "," + source.longitude.toString() +
-                    "&key=AIzaSyAgl_tVAk1eyfsSfDOI-RPF8kiEerOVKhY"
-        Timber.e(searchlink.toString())
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (context?.let {
                     ContextCompat.checkSelfPermission(
