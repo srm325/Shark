@@ -51,10 +51,14 @@ class UploadImageFragment : Fragment() {
     ): View {
         val view: View = inflater.inflate(R.layout.uploadimage_layout, container, false)
         val scanBtn: MaterialButton = view.findViewById(R.id.scan_button)
+        val finishBtn: MaterialButton = view.findViewById(R.id.finish_button)
         type = view.findViewById(R.id.type)
         scanBtn.setOnClickListener {
             IntentIntegrator.forSupportFragment(this).initiateScan();
 
+        }
+        finishBtn.setOnClickListener {
+            //upload to firebase
         }
         return view
     }
