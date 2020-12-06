@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.zxing.integration.android.IntentIntegrator
@@ -26,6 +28,7 @@ class UploadImageFragment : Fragment() {
     private  lateinit var adapter : BarcodeResultAdapter
     private var contentList : MutableList<BarcodeResult> = mutableListOf()
     val db = Firebase.firestore
+    val user = Firebase.auth.currentUser
 
 
     override fun onCreateView(
@@ -33,7 +36,7 @@ class UploadImageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view: View = inflater.inflate(R.layout.uploadimage_layout, container, false)
-        val scanBtn: MaterialButton = view.findViewById(R.id.scan_button)
+        val scanBtn: ImageView = view.findViewById(R.id.scan_button)
         type = view.findViewById(R.id.type)
         scanBtn.setOnClickListener {
             IntentIntegrator.forSupportFragment(this).initiateScan();
@@ -66,7 +69,8 @@ class UploadImageFragment : Fragment() {
 
             Timber.d(scanContent)
             Timber.d(scanFormat)
-            readData(scanContent)
+            if(scanContent!=null)
+                readData(scanContent)
             
         } else {
             val toast = Toast.makeText(
@@ -96,6 +100,7 @@ class UploadImageFragment : Fragment() {
                         contentList.add(
                             BarcodeResult(
                                 "",
+                                user!!.uid,
                                 code,
                                 name,
                                 element,

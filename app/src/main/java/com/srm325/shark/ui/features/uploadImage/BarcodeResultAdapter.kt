@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.srm325.shark.R
 import com.srm325.shark.data.model.BarcodeResult
@@ -25,8 +26,12 @@ class BarcodeResultAdapter(var postList: List<BarcodeResult>) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: BarcodeViewHolder, position: Int) {
 
-
-
+        val item = postList[position]
+        holder.name.text = item.name
+        holder.element.text = item.element
+        holder.isRecyclable.text = item.isRecyclable
+        if(item.isRecyclable?.toLowerCase()=="no")
+            holder.isRecyclable.setTextColor(ContextCompat.getColor(context, R.color.red))
     }
 
     override fun getItemCount() = postList.size
